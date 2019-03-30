@@ -17,7 +17,7 @@
 #define APPLICATION1_DESC "DomoChip Wireless Fan"
 #define APPLICATION1_CLASS WirelessFan
 
-#define VERSION_NUMBER "1.0.0"
+#define VERSION_NUMBER "1.0.1"
 
 #define DEFAULT_AP_SSID "WirelessFan"
 #define DEFAULT_AP_PSK "PasswordFan"
