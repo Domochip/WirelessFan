@@ -7,14 +7,14 @@
 
 #include "Main.h"
 #include "base\Utils.h"
-#include "base\Base.h"
+#include "base\Application.h"
 
 const char appDataPredefPassword[] PROGMEM = "ewcXoCt4HHjZUvY1";
 
 #include "data\status1.html.gz.h"
 #include "data\config1.html.gz.h"
 
-#include "SimpleTimer.h"
+#include <Ticker.h>
 
 #define PWM_OUTPUT_PIN D2
 #define PWM_FROM_MB D1
@@ -34,7 +34,8 @@ private:
   //TODO : Declare run/status properties
   float _requestedDutyCycle = 100.0;
   float _dutyCycleToApply = (APPLIED_DUTYCYCLE_MAX + APPLIED_DUTYCYCLE_MIN) / 2; //default value is medium duty cycle
-  SimpleTimer _refreshDutyCycleTimer;
+  bool _needRefreshDutyCycle = false;
+  Ticker _refreshDutyCycleTicker;
 
   //TODO : Declare required private methods
   float MeasureDutyCycle(uint16 pin);

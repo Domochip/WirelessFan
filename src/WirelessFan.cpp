@@ -32,31 +32,14 @@ void WirelessFan::RefreshDutyCycle()
 
 //------------------------------------------
 //Used to initialize configuration properties to default values
-void WirelessFan::SetConfigDefaultValues(){
-    //TODO
-    //property1 = 0;
-    //property2 = F("test");
-};
+void WirelessFan::SetConfigDefaultValues(){};
 //------------------------------------------
 //Parse JSON object into configuration properties
-void WirelessFan::ParseConfigJSON(DynamicJsonDocument &doc){
-    //TODO
-    //if (!doc["prop1"].isNull()) property1 = doc[F("prop1")];
-    //if (!doc["prop2"].isNull()) strlcpy(property2, doc["prop2"], sizeof(property2));
-};
+void WirelessFan::ParseConfigJSON(DynamicJsonDocument &doc){};
 //------------------------------------------
 //Parse HTTP POST parameters in request into configuration properties
 bool WirelessFan::ParseConfigWebRequest(AsyncWebServerRequest *request)
 {
-    //TODO
-    // if (!request->hasParam(F("prop1"), true))
-    // {
-    //     request->send(400, F("text/html"), F("prop1 missing"));
-    //     return false;
-    // }
-    //if (request->hasParam(F("prop1"), true)) property1 = request->getParam(F("prop1"), true)->value().toInt();
-    //if (request->hasParam(F("prop2"), true) && request->getParam(F("prop2"), true)->value().length() < sizeof(property2)) strcpy(property2, request->getParam(F("prop2"), true)->value().c_str());
-
     return true;
 };
 //------------------------------------------
@@ -64,9 +47,6 @@ bool WirelessFan::ParseConfigWebRequest(AsyncWebServerRequest *request)
 String WirelessFan::GenerateConfigJSON(bool forSaveFile = false)
 {
     String gc('{');
-    //TODO
-    // gc = gc + F("\"p1\":") + (property1 ? true : false);
-    // gc = gc + F("\"p2\":\"") + property2 + '"';
 
     gc += '}';
 
@@ -95,7 +75,7 @@ bool WirelessFan::AppInit(bool reInit)
     analogWrite(PWM_OUTPUT_PIN, _dutyCycleToApply);
 
     if (!_reInit)
-        _refreshDutyCycleTimer.setInterval(200, [this]() { this->RefreshDutyCycle(); });
+        _refreshDutyCycleTicker.attach_ms(200, [this]() { this->_needRefreshDutyCycle = true; });
 
     return true;
 };
@@ -137,22 +117,19 @@ size_t WirelessFan::GetHTMLContentSize(WebPageForPlaceHolder wp)
 
 //------------------------------------------
 //code to register web request answer to the web server
-void WirelessFan::AppInitWebServer(AsyncWebServer &server, bool &shouldReboot, bool &pauseApplication){
-    //TODO
-    //server.on("/getColor", HTTP_GET, [this](AsyncWebServerRequest * request) {request->send(200, F("text/html"), GetColor());});
-};
+void WirelessFan::AppInitWebServer(AsyncWebServer &server, bool &shouldReboot, bool &pauseApplication){};
 
 //------------------------------------------
 //Run for timer
 void WirelessFan::AppRun()
 {
-    _refreshDutyCycleTimer.run();
+    if (_needRefreshDutyCycle)
+    {
+        _needRefreshDutyCycle = false;
+        RefreshDutyCycle();
+    }
 }
 
 //------------------------------------------
 //Constructor
-WirelessFan::WirelessFan(char appId, String appName) : Application(appId, appName)
-{
-    //TODO : Initialize special structure or libraries in constructor
-    //Note : most of the time, init is done during AppInit based on configuration
-}
+WirelessFan::WirelessFan(char appId, String appName) : Application(appId, appName) {}
