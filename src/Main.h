@@ -4,15 +4,10 @@
 #include <arduino.h>
 
 //DomoChip Informations
-//------------Compile for 1M 64K SPIFFS------------
 //Configuration Web Pages :
 //http://IP/
-//http://IP/config
-//http://IP/fw
 
-//include Application header file
-#include "WirelessFan.h"
-
+#define APPLICATION1_HEADER "WirelessFan.h"
 #define APPLICATION1_NAME "WFan"
 #define APPLICATION1_DESC "DomoChip Wireless Fan"
 #define APPLICATION1_CLASS WirelessFan
@@ -25,8 +20,10 @@
 //Enable developper mode (SPIFFS editor)
 #define DEVELOPPER_MODE 0
 
-//Choose Serial Speed
-#define SERIAL_SPEED 115200
+//Log Serial Object
+#define LOG_SERIAL Serial
+//Choose Log Serial Speed
+#define LOG_SERIAL_SPEED 115200
 
 //Choose Pin used to boot in Rescue Mode
 #define RESCUE_BTN_PIN 2

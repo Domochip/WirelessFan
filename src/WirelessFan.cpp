@@ -23,8 +23,8 @@ void WirelessFan::RefreshDutyCycle()
     //constrain and remap it to new range
     _dutyCycleToApply = map(constrain(_requestedDutyCycle, REQUESTED_DUTYCYCLE_MIN, REQUESTED_DUTYCYCLE_MAX), REQUESTED_DUTYCYCLE_MIN, REQUESTED_DUTYCYCLE_MAX, APPLIED_DUTYCYCLE_MIN, APPLIED_DUTYCYCLE_MAX);
 
-    //   Serial.print(F("dutyCycleToApply="));
-    //   Serial.println(dutyCycleToApply);
+    //   LOG_SERIAL.print(F("dutyCycleToApply="));
+    //   LOG_SERIAL.println(dutyCycleToApply);
 
     //apply duty cycle
     analogWrite(PWM_OUTPUT_PIN, _dutyCycleToApply);
