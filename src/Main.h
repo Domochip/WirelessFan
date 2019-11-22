@@ -17,6 +17,9 @@
 #define DEFAULT_AP_SSID "WirelessFan"
 #define DEFAULT_AP_PSK "PasswordFan"
 
+//Enable status webpage EventSource
+#define ENABLE_STATUS_EVENTSOURCE 0
+
 //Enable developper mode (SPIFFS editor)
 #define DEVELOPPER_MODE 0
 
