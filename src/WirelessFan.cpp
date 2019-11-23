@@ -1,6 +1,6 @@
 #include "WirelessFan.h"
 
-float WirelessFan::MeasureDutyCycle(uint16 pin)
+float WirelessFan::measureDutyCycle(uint16 pin)
 {
     float res = 0.0;
     uint16 nbHigh = 0;
@@ -15,10 +15,10 @@ float WirelessFan::MeasureDutyCycle(uint16 pin)
     return res;
 }
 
-void WirelessFan::RefreshDutyCycle()
+void WirelessFan::refreshDutyCycle()
 {
     //measure requested PWM and constrain it
-    _requestedDutyCycle = round(MeasureDutyCycle(PWM_FROM_MB));
+    _requestedDutyCycle = round(measureDutyCycle(PWM_FROM_MB));
 
     //constrain and remap it to new range
     _dutyCycleToApply = map(constrain(_requestedDutyCycle, REQUESTED_DUTYCYCLE_MIN, REQUESTED_DUTYCYCLE_MAX), REQUESTED_DUTYCYCLE_MIN, REQUESTED_DUTYCYCLE_MAX, APPLIED_DUTYCYCLE_MIN, APPLIED_DUTYCYCLE_MAX);
@@ -32,19 +32,19 @@ void WirelessFan::RefreshDutyCycle()
 
 //------------------------------------------
 //Used to initialize configuration properties to default values
-void WirelessFan::SetConfigDefaultValues(){};
+void WirelessFan::setConfigDefaultValues(){};
 //------------------------------------------
 //Parse JSON object into configuration properties
-void WirelessFan::ParseConfigJSON(DynamicJsonDocument &doc){};
+void WirelessFan::parseConfigJSON(DynamicJsonDocument &doc){};
 //------------------------------------------
 //Parse HTTP POST parameters in request into configuration properties
-bool WirelessFan::ParseConfigWebRequest(AsyncWebServerRequest *request)
+bool WirelessFan::parseConfigWebRequest(AsyncWebServerRequest *request)
 {
     return true;
 };
 //------------------------------------------
 //Generate JSON from configuration properties
-String WirelessFan::GenerateConfigJSON(bool forSaveFile = false)
+String WirelessFan::generateConfigJSON(bool forSaveFile = false)
 {
     String gc('{');
 
@@ -54,7 +54,7 @@ String WirelessFan::GenerateConfigJSON(bool forSaveFile = false)
 };
 //------------------------------------------
 //Generate JSON of application status
-String WirelessFan::GenerateStatusJSON()
+String WirelessFan::generateStatusJSON()
 {
     String gs('{');
 
@@ -67,7 +67,7 @@ String WirelessFan::GenerateStatusJSON()
 };
 //------------------------------------------
 //code to execute during initialization and reinitialization of the app
-bool WirelessFan::AppInit(bool reInit)
+bool WirelessFan::appInit(bool reInit)
 {
     pinMode(PWM_OUTPUT_PIN, OUTPUT); // Initialize the PWM_OUTPUT_PIN pin as an output
     analogWriteFreq(25000);
@@ -81,7 +81,7 @@ bool WirelessFan::AppInit(bool reInit)
 };
 //------------------------------------------
 //Return HTML Code to insert into Status Web page
-const uint8_t *WirelessFan::GetHTMLContent(WebPageForPlaceHolder wp)
+const uint8_t *WirelessFan::getHTMLContent(WebPageForPlaceHolder wp)
 {
     switch (wp)
     {
@@ -98,7 +98,7 @@ const uint8_t *WirelessFan::GetHTMLContent(WebPageForPlaceHolder wp)
     return nullptr;
 };
 //and his Size
-size_t WirelessFan::GetHTMLContentSize(WebPageForPlaceHolder wp)
+size_t WirelessFan::getHTMLContentSize(WebPageForPlaceHolder wp)
 {
     switch (wp)
     {
@@ -117,16 +117,16 @@ size_t WirelessFan::GetHTMLContentSize(WebPageForPlaceHolder wp)
 
 //------------------------------------------
 //code to register web request answer to the web server
-void WirelessFan::AppInitWebServer(AsyncWebServer &server, bool &shouldReboot, bool &pauseApplication){};
+void WirelessFan::appInitWebServer(AsyncWebServer &server, bool &shouldReboot, bool &pauseApplication){};
 
 //------------------------------------------
 //Run for timer
-void WirelessFan::AppRun()
+void WirelessFan::appRun()
 {
     if (_needRefreshDutyCycle)
     {
         _needRefreshDutyCycle = false;
-        RefreshDutyCycle();
+        refreshDutyCycle();
     }
 }
 
