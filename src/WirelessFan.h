@@ -18,7 +18,7 @@ const char appDataPredefPassword[] PROGMEM = "ewcXoCt4HHjZUvY1";
 //define dutycycles in % for adjusting Fan speed
 #define REQUESTED_DUTYCYCLE_MIN 22
 #define REQUESTED_DUTYCYCLE_MAX 100
-#define APPLIED_DUTYCYCLE_MIN 6
+#define APPLIED_DUTYCYCLE_MIN 5
 #define APPLIED_DUTYCYCLE_MAX 100
 
 //TODO : Rename WirelessFan
